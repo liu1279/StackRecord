@@ -14,10 +14,10 @@ repositories {
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2022.2.5")
+    version.set("2023.2")
     type.set("CL") // Target IDE Platform
 
-    plugins.set(listOf("com.intellij.cidr.debugger"/* Plugin Dependencies */))
+    plugins.set(listOf("com.intellij.cidr.base"/* Plugin Dependencies */))
 }
 
 tasks {
