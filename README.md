@@ -1,2 +1,2 @@
 这是一款用于栈分析的idea插件，使用方式见我的csdn博客
-https://blog.csdn.net/weixin_45864553/article/details/132516241?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22132516241%22%2C%22source%22%3A%22weixin_45864553%22%7D
+https://blog.csdn.net/weixin_45864553/article/details/132516241
