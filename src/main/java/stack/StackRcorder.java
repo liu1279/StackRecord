@@ -1,10 +1,10 @@
 package stack;
 
-import com.intellij.debugger.engine.JavaStackFrame;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKey;
 import com.intellij.xdebugger.impl.frame.XDebuggerFramesList;
+import com.jetbrains.cidr.execution.debugger.CidrStackFrame;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -25,10 +25,13 @@ public class StackRcorder extends AnAction {
     public void actionPerformed(AnActionEvent e) {
 
         XDebuggerFramesList framesList = e.getData(DataKey.create("FRAMES_LIST"));
-        List<JavaStackFrame> items = (List<JavaStackFrame>) framesList.getModel().getItems();
+        List<CidrStackFrame> items = (List<CidrStackFrame>) framesList.getModel().getItems();
         List<LineData> lineDataList = new ArrayList<>();
-        for (JavaStackFrame item : items) {
+        for (CidrStackFrame item : items) {
             lineDataList.add(0, new LineData(item));
+            if (item.getFrame().getFunction() .equalsIgnoreCase("main")) {
+                break;
+            }
         }
         if (!ALL_START_METHODS.contains(lineDataList.get(0))) {
             ALL_START_METHODS.add(lineDataList.get(0));

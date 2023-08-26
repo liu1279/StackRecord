@@ -37,7 +37,9 @@ public class RecordWindow {
         }
 
         String comment = JOptionPane.showInputDialog("添加注释");
-        thisBreakPoint.setComment(comment);
+        if (comment != null) {
+            thisBreakPoint.setComment(comment);
+        }
         BREAK_POINT_LINES.add(thisBreakPoint);
         DEFAULT_TABLE_MODEL.addRow(thisBreakPoint.toArray());
         return true;

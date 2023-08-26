@@ -1,6 +1,6 @@
 package stack;
 
-import com.intellij.debugger.engine.JavaStackFrame;
+import com.jetbrains.cidr.execution.debugger.CidrStackFrame;
 import lombok.Data;
 
 import java.util.Objects;
@@ -15,10 +15,10 @@ public class LineData {
     private String fileNum;
     private String comment;
 
-    public LineData(JavaStackFrame javaStackFrame) {
-        method = javaStackFrame.getDescriptor().getName();
-        fileName = javaStackFrame.getSourcePosition().getFile().getName().split("\\.")[0];
-        fileNum = String.valueOf(javaStackFrame.getSourcePosition().getLine() + 1);
+    public LineData(CidrStackFrame stackFrame) {
+        method = stackFrame.getFrame().getFunction();
+        fileName = stackFrame.getSourcePosition().getFile().getName().split("\\.")[0];
+        fileNum = String.valueOf(stackFrame.getSourcePosition().getLine() + 1);
         methodId = method + " " + fileName;
         nextMethodRef = fileName + ":" + fileNum;
         comment = "";
