@@ -31,7 +31,7 @@ public class Until {
         String file = line.getFileName();
         String noticeInfo = isPrint ? " 【已在level " + printedLevel + "打印】" : "";
         if (isOverLoad) {
-            noticeInfo += "【重载】";
+            noticeInfo += "【重写】";
         }
         String stackPrefix = level == 0 ? "\n" : "";
 

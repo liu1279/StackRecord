@@ -35,10 +35,8 @@ public class StackRcorder extends AnAction {
         }
 
         LineData thisBreakPoint = lineDataList.get(lineDataList.size() - 1);
-        if (!RecordWindow.addUniquePoint(thisBreakPoint)) {
-            return;
-        }
 
+        RecordWindow.addUniquePoint(thisBreakPoint);
 
         for (int i = 0; i < lineDataList.size() - 1; i++) {
             LineData thisLineData = lineDataList.get(i);
