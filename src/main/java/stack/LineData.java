@@ -17,6 +17,7 @@ public class LineData {
     private String comment;
     private String fileMethod;
     private List<String> argTypeNames;
+    private String allInfo;
 
     public LineData(JavaStackFrame javaStackFrame) {
         method = javaStackFrame.getDescriptor().getName();
@@ -28,16 +29,18 @@ public class LineData {
         nextMethodRef = fileName + ":" + fileNum;
         comment = "";
         lineDetail = method + " " + fileName + ":" + fileNum;
+        allInfo = method + " " + fileName + ":" + fileNum + " " + argTypeNames.toString();
+
     }
 
     @Override
     public boolean equals(Object o) {
-        return ((LineData) o).getMethodId().equals(this.methodId);
+        return ((LineData) o).getMethodId().equals(this.allInfo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(methodId);
+        return Objects.hash(allInfo);
     }
 
     public String[] toArray() {
@@ -47,5 +50,9 @@ public class LineData {
         array[2] = fileNum;
         array[3] = comment;
         return array;
+    }
+
+    public boolean isSameMethodAs(LineData thisBreakPoint) {
+        return thisBreakPoint.methodId.equals(this.methodId);
     }
 }

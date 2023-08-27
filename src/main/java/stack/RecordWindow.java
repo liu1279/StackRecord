@@ -21,6 +21,8 @@ public class RecordWindow {
     private JComboBox printStyle;
     private JPanel contentPanel;
     private JButton showButton;
+    private JComboBox isComment;
+    private JComboBox recordPattern;
 
     private Project project;
 
@@ -31,7 +33,7 @@ public class RecordWindow {
 
     public static boolean addUniquePoint(LineData thisBreakPoint) {
         for (LineData breakPointLine : BREAK_POINT_LINES) {
-            if (breakPointLine.equals(thisBreakPoint)) {
+            if (breakPointLine.isSameMethodAs(thisBreakPoint)) {
                 return false;
             }
         }

@@ -25,9 +25,15 @@ public class StackRcorder extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-
         XDebuggerFramesList framesList = e.getData(DataKey.create("FRAMES_LIST"));
+        storeLineData(framesList);
+    }
+
+    public static void  storeLineData(XDebuggerFramesList framesList) {
         List<JavaStackFrame> items = (List<JavaStackFrame>) framesList.getModel().getItems();
+        if (items == null || items.isEmpty()) {
+            return;
+        }
         List<LineData> lineDataList = new ArrayList<>();
         for (JavaStackFrame item : items) {
             lineDataList.add(0, new LineData(item));

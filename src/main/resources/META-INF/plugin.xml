@@ -30,6 +30,10 @@
         <toolWindow factoryClass="stack.RecordWindowFactory" id="recordWindow" anchor="right"></toolWindow>
     </extensions>
 
+    <projectListeners>
+        <listener class="stack.DebuggerManageListener" topic="com.intellij.debugger.impl.DebuggerManagerListener"/>
+    </projectListeners>
+
     <actions>
         <action id="recordStack" class="stack.StackRcorder" text="记录此栈" description="record this stack">
             <add-to-group group-id="XDebugger.Frames.Tree.Popup" anchor="first"/>
