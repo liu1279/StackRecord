@@ -163,9 +163,7 @@ public class StackRcorder extends AnAction {
                 }
             }
         }
-        for (String s : thisMethodPrinted) {
-            thisStackPrined.remove(s);
-        }
+        thisStackPrined.removeAll(thisMethodPrinted);
     }
     public static void clear() {
         StackRcorder.METHOD_LINES_MAP.clear();

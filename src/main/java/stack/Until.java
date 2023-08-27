@@ -41,7 +41,7 @@ public class Until {
         }
 
         if (isOverWrite) {
-            noticeInfo += "【重写】";
+            noticeInfo += " 【重写】";
         }
 
         String stackPrefix = level == 0 ? "\n" : "";
