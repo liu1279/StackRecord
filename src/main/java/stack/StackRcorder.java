@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public class StackRcorder extends AnAction {
     // 记录方法对应的line
     public static final HashMap<String, List<LineData>> METHOD_LINES_MAP = new HashMap<>();
+    // 记录方法对应的参数，用来处理重载
+    public static final HashMap<String, OverLoadInfo> METHOD_MAP_ID = new HashMap<>();
     // 记录文件某行跳转到下一个方法, 重写导致可能调到多处
     public static final HashMap<String, List<String>> LINE_TO_METHODS_MAP = new HashMap<>();
     // 记录已经打印的方法，避免重复打印，key为方法名，value为level
@@ -79,7 +81,9 @@ public class StackRcorder extends AnAction {
         }
         StringBuilder printBuffer = new StringBuilder();
         PRINTED_METHODS.clear();
-        formPrint("", 0, printBuffer, false);
+        METHOD_MAP_ID.clear();
+        HashSet<String> thisStackPrined = new HashSet<>();
+        formPrint("", 0, printBuffer, false, thisStackPrined);
 
         List<String> endMethods = Arrays.stream(customEndMethodString.split(",")).map(String::strip).toList();
         if (endMethods.isEmpty()|| StringUtils.isBlank(endMethods.get(0))) {
@@ -119,26 +123,48 @@ public class StackRcorder extends AnAction {
     }
 
 
-    private static void formPrint(String method, int level, StringBuilder printBuffer, boolean isOverLoad) {
+    private static void formPrint(String method, int level, StringBuilder printBuffer,
+                                  boolean isOverWrite, HashSet<String> thisStackPrined) {
         List<LineData> lines = METHOD_LINES_MAP.getOrDefault(method, null);
         if (lines == null || lines.isEmpty()) {
             return;
         }
         boolean isFirstLine = true;
+        HashSet<String> thisMethodPrinted = new HashSet<>();
         for (LineData line : lines) {
             String nextMeRef = line.getNextMethodRef();
             boolean isPrint = PRINTED_METHODS.containsKey(nextMeRef);
+            boolean isThisStackPrint = thisStackPrined.contains(nextMeRef);
+            boolean isOverLoad = false;
+            int overLevel = -1;
+            if (METHOD_MAP_ID.containsKey(line.getFileMethod())) {
+                String recordMethodId = METHOD_MAP_ID.get(line.getFileMethod()).getMethodId();
+                if(!recordMethodId.equalsIgnoreCase(line.getMethodId())) {
+                    isOverLoad = true;
+                    overLevel = METHOD_MAP_ID.get(line.getFileMethod()).getLevel();
+                }
+            } else {
+                METHOD_MAP_ID.put(line.getFileMethod(), new OverLoadInfo(line.getMethodId(),level));
+            }
             int printedLevel = isPrint ? PRINTED_METHODS.get(nextMeRef) : -1;
-            Until.formPrintByStyle(line, level, printBuffer, isPrint, printedLevel, isFirstLine, isOverLoad, printStyle);
+            Until.formPrintByStyle(line, level, printBuffer, isPrint, printedLevel,
+                    isFirstLine, isOverWrite, printStyle, isThisStackPrint, isOverLoad, overLevel);
             isFirstLine = false;
+            if (!isThisStackPrint){
+                thisStackPrined.add(nextMeRef);
+                thisMethodPrinted.add(nextMeRef);
+            }
             if (!isPrint) {
                 PRINTED_METHODS.put(nextMeRef, level);
                 if (LINE_TO_METHODS_MAP.containsKey(nextMeRef)) {
                     for (String nextMethod : LINE_TO_METHODS_MAP.get(nextMeRef)) {
-                        formPrint(nextMethod, level + 1, printBuffer, LINE_TO_METHODS_MAP.get(nextMeRef).size() > 1);
+                        formPrint(nextMethod, level + 1, printBuffer, LINE_TO_METHODS_MAP.get(nextMeRef).size() > 1, thisStackPrined);
                     }
                 }
             }
+        }
+        for (String s : thisMethodPrinted) {
+            thisStackPrined.remove(s);
         }
     }
     public static void clear() {
@@ -146,6 +172,7 @@ public class StackRcorder extends AnAction {
         StackRcorder.LINE_TO_METHODS_MAP.clear();
         StackRcorder.ALL_START_METHODS.clear();
         StackRcorder.PRINTED_METHODS.clear();
+        StackRcorder.METHOD_MAP_ID.clear();
     }
 }
 

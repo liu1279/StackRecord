@@ -3,6 +3,7 @@ package stack;
 import com.intellij.debugger.engine.JavaStackFrame;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Objects;
 
 @Data
@@ -14,12 +15,16 @@ public class LineData {
     private String fileName;
     private String fileNum;
     private String comment;
+    private String fileMethod;
+    private List<String> argTypeNames;
 
     public LineData(JavaStackFrame javaStackFrame) {
         method = javaStackFrame.getDescriptor().getName();
         fileName = javaStackFrame.getSourcePosition().getFile().getName().split("\\.")[0];
         fileNum = String.valueOf(javaStackFrame.getSourcePosition().getLine() + 1);
-        methodId = method + " " + fileName;
+        argTypeNames = javaStackFrame.getDescriptor().getMethod().argumentTypeNames();
+        fileMethod = method + " " + fileName;
+        methodId = method + " " + fileName + " " + argTypeNames.toString();
         nextMethodRef = fileName + ":" + fileNum;
         comment = "";
         lineDetail = method + " " + fileName + ":" + fileNum;
@@ -27,12 +32,12 @@ public class LineData {
 
     @Override
     public boolean equals(Object o) {
-        return ((LineData) o).getMethodId().equals(this.methodId) && ((LineData) o).fileNum.equals(this.fileNum);
+        return ((LineData) o).getMethodId().equals(this.methodId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(methodId, fileNum);
+        return Objects.hash(methodId);
     }
 
     public String[] toArray() {
