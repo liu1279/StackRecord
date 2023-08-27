@@ -25,16 +25,22 @@ public class Until {
     }
 
     public static void formPrintByStyle(LineData line, int level, StringBuilder printBuffer, boolean isPrint, int printedLevel,
-                                        boolean isFirstLine, boolean isOverLoad, int printStyle) {
+                                        boolean isFirstLine, boolean isOverWrite, int printStyle,
+                                        boolean isThisStackPrint) {
         String strLevel = (level > 9 ? "" : "0") + level;
         String me = line.getMethod();
-        String file = line.getFileName();
-        String noticeInfo = isPrint ? " 【已在level " + printedLevel + "打印】" : "";
-        if (isOverLoad) {
-            noticeInfo += "【重写】";
+        String noticeInfo = "";
+        if (isThisStackPrint) {
+            noticeInfo += " 【递归 -> " + printedLevel + "】";
+        } else if (isPrint) {
+            noticeInfo += " 【重复 -> " + printedLevel + "】";
         }
-        String stackPrefix = level == 0 ? "\n" : "";
 
+        if (isOverWrite) {
+            noticeInfo += " 【重写】";
+        }
+
+        String stackPrefix = level == 0 ? "\n" : "";
         String levelBlanks = Until.getLevelBlanks(level);
         String comment = line.getComment().equals("") ? "" : " //" + line.getComment();
         if (printStyle == 0) {

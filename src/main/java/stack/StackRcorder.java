@@ -82,7 +82,8 @@ public class StackRcorder extends AnAction {
         }
         StringBuilder printBuffer = new StringBuilder();
         PRINTED_METHODS.clear();
-        formPrint("", 0, printBuffer, false);
+        HashSet<String> thisStackPrined = new HashSet<>();
+        formPrint("", 0, printBuffer, false, thisStackPrined);
 
         List<String> endMethods = Arrays.stream(customEndMethodString.split(",")).map(String::strip).toList();
         if (endMethods.isEmpty()|| StringUtils.isBlank(endMethods.get(0))) {
@@ -122,27 +123,36 @@ public class StackRcorder extends AnAction {
     }
 
 
-    private static void formPrint(String method, int level, StringBuilder printBuffer, boolean isOverLoad) {
+    private static void formPrint(String method, int level, StringBuilder printBuffer,
+                                  boolean isOverWrite, HashSet<String> thisStackPrined) {
         List<LineData> lines = METHOD_LINES_MAP.getOrDefault(method, null);
         if (lines == null || lines.isEmpty()) {
             return;
         }
         boolean isFirstLine = true;
+        HashSet<String> thisMethodPrinted = new HashSet<>();
         for (LineData line : lines) {
             String nextMeRef = line.getNextMethodRef();
             boolean isPrint = PRINTED_METHODS.containsKey(nextMeRef);
+            boolean isThisStackPrint = thisStackPrined.contains(nextMeRef);
             int printedLevel = isPrint ? PRINTED_METHODS.get(nextMeRef) : -1;
-            Until.formPrintByStyle(line, level, printBuffer, isPrint, printedLevel, isFirstLine, isOverLoad, printStyle);
+            Until.formPrintByStyle(line, level, printBuffer, isPrint, printedLevel,
+                    isFirstLine, isOverWrite, printStyle, isThisStackPrint);
             isFirstLine = false;
+            if (!isThisStackPrint){
+                thisStackPrined.add(nextMeRef);
+                thisMethodPrinted.add(nextMeRef);
+            }
             if (!isPrint) {
                 PRINTED_METHODS.put(nextMeRef, level);
                 if (LINE_TO_METHODS_MAP.containsKey(nextMeRef)) {
                     for (String nextMethod : LINE_TO_METHODS_MAP.get(nextMeRef)) {
-                        formPrint(nextMethod, level + 1, printBuffer, LINE_TO_METHODS_MAP.get(nextMeRef).size() > 1);
+                        formPrint(nextMethod, level + 1, printBuffer, LINE_TO_METHODS_MAP.get(nextMeRef).size() > 1, thisStackPrined);
                     }
                 }
             }
         }
+        thisStackPrined.removeAll(thisMethodPrinted);
     }
     public static void clear() {
         StackRcorder.METHOD_LINES_MAP.clear();
