@@ -22,6 +22,7 @@ public class StackRcorder extends AnAction {
     // 记录所有的开始方法
     public static final List<LineData> ALL_START_METHODS = new ArrayList<>();
     public static int printStyle = 1;
+    public static boolean needComment = true;
 
     @Override
     public void actionPerformed(AnActionEvent e) {

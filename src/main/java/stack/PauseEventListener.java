@@ -15,13 +15,14 @@ import java.util.List;
 public class PauseEventListener implements DebuggerContextListener {
     private XDebuggerFramesList framesList;
 
+    public static boolean isAutoRecord = false;
     @Override
     public void changeEvent(@NotNull DebuggerContextImpl newContext, DebuggerSession.Event event) {
         if (event == DebuggerSession.Event.PAUSE) {
             if (framesList == null) {
                 framesList = DataManager.getInstance().getDataContext().getData(DataKey.create("FRAMES_LIST"));
             }
-            if (framesList != null) {
+            if (isAutoRecord && framesList != null) {
                 StackRcorder.storeLineData(framesList);
             }
         }

@@ -112,8 +112,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="简洁"/>
-            <item value="详细"/>
+            <item value="简洁打印"/>
+            <item value="详细打印"/>
           </model>
         </properties>
       </component>
