@@ -6,6 +6,7 @@ import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.ui.components.JBScrollPane;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class FigureDialog extends DialogWrapper {
 
     private JTextArea jTextArea;
+    private JBScrollPane jbScrollPane;
     Project project;
     String stackFigure;
 
@@ -30,15 +32,14 @@ public class FigureDialog extends DialogWrapper {
         this.stackFigure = figure;
         jTextArea = new JTextArea();
         jTextArea.setText(figure);
-        jTextArea.setVisible(true);
         init();
     }
 
     @Override
     protected @Nullable JComponent createCenterPanel() {
-        JPanel panel = new JPanel();
-        panel.add(jTextArea);
-        return panel;
+        jbScrollPane = new JBScrollPane(jTextArea);
+        jbScrollPane.setVisible(true);
+        return jbScrollPane;
     }
 
     @Override
