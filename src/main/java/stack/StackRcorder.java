@@ -27,12 +27,13 @@ public class StackRcorder extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         XDebuggerFramesList framesList = e.getData(DataKey.create("FRAMES_LIST"));
+        PauseEventListener.framesList = framesList;
         storeLineData(framesList);
     }
 
-    public static void  storeLineData(XDebuggerFramesList framesList) {
+    public static void storeLineData(XDebuggerFramesList framesList) {
         List<JavaStackFrame> items = (List<JavaStackFrame>) framesList.getModel().getItems();
-        if (items == null || items.isEmpty()) {
+        if (items.isEmpty()) {
             return;
         }
         List<LineData> lineDataList = new ArrayList<>();
@@ -45,8 +46,11 @@ public class StackRcorder extends AnAction {
 
         LineData thisBreakPoint = lineDataList.get(lineDataList.size() - 1);
 
-        RecordWindow.addUniquePoint(thisBreakPoint);
+        if (!RecordWindow.addUniquePoint(thisBreakPoint)) {
+            lineDataList.remove(lineDataList.size() - 1);
+        }
 
+        thisBreakPoint = lineDataList.get(lineDataList.size() - 1);
         for (int i = 0; i < lineDataList.size() - 1; i++) {
             LineData thisLineData = lineDataList.get(i);
             LineData nextLineData = lineDataList.get(i + 1);
@@ -93,7 +97,7 @@ public class StackRcorder extends AnAction {
         formPrint("", 0, printBuffer, false, thisStackPrined);
 
         List<String> endMethods = Arrays.stream(customEndMethodString.split(",")).map(String::strip).toList();
-        if (endMethods.isEmpty()|| StringUtils.isBlank(endMethods.get(0))) {
+        if (endMethods.isEmpty() || StringUtils.isBlank(endMethods.get(0))) {
             return printBuffer.toString();
         }
         String[] lines = printBuffer.toString().split("\n");
@@ -146,18 +150,18 @@ public class StackRcorder extends AnAction {
             int overLevel = -1;
             if (METHOD_MAP_ID.containsKey(line.getFileMethod())) {
                 String recordMethodId = METHOD_MAP_ID.get(line.getFileMethod()).getMethodId();
-                if(!recordMethodId.equalsIgnoreCase(line.getMethodId())) {
+                if (!recordMethodId.equalsIgnoreCase(line.getMethodId())) {
                     isOverLoad = true;
                     overLevel = METHOD_MAP_ID.get(line.getFileMethod()).getLevel();
                 }
             } else {
-                METHOD_MAP_ID.put(line.getFileMethod(), new OverLoadInfo(line.getMethodId(),level));
+                METHOD_MAP_ID.put(line.getFileMethod(), new OverLoadInfo(line.getMethodId(), level));
             }
             int printedLevel = isPrint ? PRINTED_METHODS.get(nextMeRef) : -1;
             Until.formPrintByStyle(line, level, printBuffer, isPrint, printedLevel,
                     isFirstLine, isOverWrite, printStyle, isThisStackPrint, isOverLoad, overLevel);
             isFirstLine = false;
-            if (!isThisStackPrint){
+            if (!isThisStackPrint) {
                 thisStackPrined.add(nextMeRef);
                 thisMethodPrinted.add(nextMeRef);
             }

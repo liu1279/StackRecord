@@ -41,7 +41,9 @@ public class RecordWindow {
         }
         if (StackRcorder.needComment) {
             String comment = JOptionPane.showInputDialog("添加注释");
-            thisBreakPoint.setComment(comment);
+            if (comment != null) {
+                thisBreakPoint.setComment(comment);
+            }
         }
         BREAK_POINT_LINES.add(thisBreakPoint);
         DEFAULT_TABLE_MODEL.addRow(thisBreakPoint.toArray());
@@ -79,7 +81,7 @@ public class RecordWindow {
         recordPattern.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange()==ItemEvent.SELECTED) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (e.getItem().equals("自动记录")) {
                         PauseEventListener.isAutoRecord = true;
                     } else if (e.getItem().equals("手动记录")) {
@@ -95,7 +97,7 @@ public class RecordWindow {
         isComment.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange()==ItemEvent.SELECTED) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
                     if (e.getItem().equals("添加说明")) {
                         StackRcorder.needComment = true;
                     } else if (e.getItem().equals("不添加说明")) {

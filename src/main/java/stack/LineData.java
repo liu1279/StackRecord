@@ -35,7 +35,7 @@ public class LineData {
 
     @Override
     public boolean equals(Object o) {
-        return ((LineData) o).getMethodId().equals(this.allInfo);
+        return ((LineData) o).getAllInfo().equals(this.allInfo);
     }
 
     @Override
