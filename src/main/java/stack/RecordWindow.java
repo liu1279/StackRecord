@@ -28,7 +28,7 @@ public class RecordWindow {
 
     private Project project;
 
-    public static final String[] COLUMES = {"方法名", "文件名", "行号", "注释"};
+    public static final String[] COLUMES = {"method", "file", "number", "comment"};
     public static final DefaultTableModel DEFAULT_TABLE_MODEL = new DefaultTableModel(null, COLUMES);
 
     public static final ArrayList<LineData> BREAK_POINT_LINES = new ArrayList<>();
@@ -40,7 +40,7 @@ public class RecordWindow {
             }
         }
         if (StackRcorder.needComment) {
-            String comment = JOptionPane.showInputDialog("添加注释");
+            String comment = JOptionPane.showInputDialog("add comment");
             if (comment != null) {
                 thisBreakPoint.setComment(comment);
             }
@@ -71,7 +71,7 @@ public class RecordWindow {
             public void actionPerformed(ActionEvent e) {
                 String stackFigure = StackRcorder.GetStackFigure(startMethods.getText(), endMethods.getText(), printStyle.getSelectedIndex());
                 if (StringUtils.isBlank(stackFigure)) {
-                    Messages.showMessageDialog("没有栈信息", "警告", Messages.getInformationIcon());
+                    Messages.showMessageDialog("no stack info", "warning", Messages.getInformationIcon());
                     return;
                 }
                 FigureDialog stackFigureDialog = new FigureDialog(project, stackFigure);
@@ -82,25 +82,22 @@ public class RecordWindow {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if (e.getItem().equals("自动记录")) {
+                    if (e.getItem().equals("auto record")) {
                         PauseEventListener.isAutoRecord = true;
-                    } else if (e.getItem().equals("手动记录")) {
+                    } else if (e.getItem().equals("manual record")) {
                         PauseEventListener.isAutoRecord = false;
                     }
                 }
             }
         });
-        /*
-            添加说明
-            不添加说明
-         */
+
         isComment.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
-                    if (e.getItem().equals("添加说明")) {
+                    if (e.getItem().equals("add comment")) {
                         StackRcorder.needComment = true;
-                    } else if (e.getItem().equals("不添加说明")) {
+                    } else if (e.getItem().equals("not add comment")) {
                         StackRcorder.needComment = false;
                     }
                 }

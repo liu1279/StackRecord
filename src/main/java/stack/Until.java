@@ -31,17 +31,17 @@ public class Until {
         String me = line.getMethod();
         String noticeInfo = "";
         if (isThisStackPrint) {
-            noticeInfo += " 【递归 -> " + printedLevel + "】";
+            noticeInfo += " [[ recursion -> " + printedLevel + " ]]";
         } else if (isPrint) {
-            noticeInfo += " 【重复 -> " + printedLevel + "】";
+            noticeInfo += " [[ repeat -> " + printedLevel + " ]]";
         }
 
         if (isOverLoad) {
-            noticeInfo += " 【重载 -> " + overLevel + "】";
+            noticeInfo += " [[ overLoad -> " + overLevel + " ]]";
         }
 
         if (isOverWrite) {
-            noticeInfo += " 【重写】";
+            noticeInfo += " [[ overWrite ]]";
         }
 
         String stackPrefix = level == 0 ? "\n" : "";
@@ -57,7 +57,7 @@ public class Until {
             }
 
         } else {
-            System.out.println("请定义你的style！");
+            System.out.println("please define your style！");
             return;
         }
     }

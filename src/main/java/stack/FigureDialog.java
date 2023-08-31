@@ -47,7 +47,7 @@ public class FigureDialog extends DialogWrapper {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
         JButton button = new JButton();
-        button.setText("保存图片");
+        button.setText("save figure");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

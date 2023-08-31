@@ -1,11 +1,11 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.StackRecorder</id>
+    <id>com.StackRecord</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>StackRecorder</name>
+    <name>Stack Record</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="460302767@qq.com" url="https://www.ljpcompany.com">ljpcompany</vendor>
@@ -16,7 +16,12 @@
     <description>
         <![CDATA[
             a plugin for stack record and analysis.<br>
-            <em>help you learn method call</em>
+            <em>1.format print stack<br></em>
+            <em>2.combining multiple stacks<br></em>
+            <em>3.briefly analyze the stack<br></em>
+            <br>
+            use it by this way:
+            https://blog.csdn.net/weixin_45864553/article/details/132516241
         ]]>
     </description>
 
@@ -27,7 +32,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="stack.RecordWindowFactory" id="recordWindow" anchor="right"></toolWindow>
+        <toolWindow factoryClass="stack.RecordWindowFactory" id="Stack Record" anchor="right"></toolWindow>
     </extensions>
 
     <projectListeners>
@@ -35,7 +40,7 @@
     </projectListeners>
 
     <actions>
-        <action id="recordStack" class="stack.StackRcorder" text="记录此栈" description="record this stack">
+        <action id="recordStack" class="stack.StackRcorder" text="record this stack" description="record this stack">
             <add-to-group group-id="XDebugger.Frames.Tree.Popup" anchor="first"/>
         </action>
     </actions>

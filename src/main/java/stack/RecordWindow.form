@@ -18,13 +18,13 @@
           <component id="a0e25" class="javax.swing.JButton" binding="showButton" default-binding="true">
             <constraints/>
             <properties>
-              <text value="生成图片"/>
+              <text value="generate figure"/>
             </properties>
           </component>
           <component id="bec5b" class="javax.swing.JButton" binding="resetButton">
             <constraints/>
             <properties>
-              <text value="清空"/>
+              <text value="clear"/>
             </properties>
           </component>
         </children>
@@ -65,7 +65,7 @@
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="起始方法"/>
+              <text value="start methods"/>
             </properties>
           </component>
           <component id="d5b1a" class="javax.swing.JTextField" binding="startMethods">
@@ -83,7 +83,7 @@
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="结束方法"/>
+              <text value="end methods"/>
             </properties>
           </component>
           <component id="47be9" class="javax.swing.JTextField" binding="endMethods">
@@ -103,7 +103,7 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="打印风格"/>
+          <text value="setting"/>
         </properties>
       </component>
       <component id="68673" class="javax.swing.JComboBox" binding="printStyle">
@@ -112,8 +112,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="简洁打印"/>
-            <item value="详细打印"/>
+            <item value="simple print"/>
+            <item value="detail print"/>
           </model>
         </properties>
       </component>
@@ -123,8 +123,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="添加说明"/>
-            <item value="不添加说明"/>
+            <item value="add comment"/>
+            <item value="not add comment"/>
           </model>
         </properties>
       </component>
@@ -134,8 +134,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="手动记录"/>
-            <item value="自动记录"/>
+            <item value="manual record"/>
+            <item value="auto record"/>
           </model>
         </properties>
       </component>

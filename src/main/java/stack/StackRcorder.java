@@ -11,15 +11,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class StackRcorder extends AnAction {
-    // 记录方法对应的line
+    // method -> line belong to this method
     public static final HashMap<String, List<LineData>> METHOD_LINES_MAP = new HashMap<>();
-    // 记录方法对应的参数，用来处理重载
+    // use for overload
     public static final HashMap<String, OverLoadInfo> METHOD_MAP_ID = new HashMap<>();
-    // 记录文件某行跳转到下一个方法, 重写导致可能调到多处
+    // file:num -> method
     public static final HashMap<String, List<String>> LINE_TO_METHODS_MAP = new HashMap<>();
-    // 记录已经打印的方法，避免重复打印，key为方法名，value为level
+    // record printed method, to avoid repeating print
     public static final HashMap<String, Integer> PRINTED_METHODS = new HashMap<>();
-    // 记录所有的开始方法
+    // record all start methods
     public static final List<LineData> ALL_START_METHODS = new ArrayList<>();
     public static int printStyle = 1;
     public static boolean needComment = true;
@@ -72,7 +72,7 @@ public class StackRcorder extends AnAction {
             });
         }
 
-        // 获取起始方法，用于过滤
+        // get start method, for filter
         List<String> customStartMethods = Arrays.stream(customStartMethodString.split(",")).map(String::strip).toList();
         if (customStartMethods.isEmpty() || StringUtils.isBlank(customStartMethods.get(0))) {
             METHOD_LINES_MAP.put("", ALL_START_METHODS);
@@ -86,7 +86,7 @@ public class StackRcorder extends AnAction {
                 }
             }
             if (METHOD_LINES_MAP.get("").isEmpty()) {
-                System.out.println("请输入正确的起始方法！");
+                System.out.println("please input correct start method！");
                 return null;
             }
         }
