@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "StackRecorder"
+rootProject.name = "Stack Record"

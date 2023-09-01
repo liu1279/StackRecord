@@ -6,12 +6,12 @@
 -->
 <application generated-by="intellij" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_3.xsd">
 
-	<id>StackRecorder.main</id>
+	<id>Stack Record.main</id>
 
 	<classpath>
-		<dir name="D:/Program Files/IdeaProjects/StackRecorder/build/resources/main">
+		<dir name="D:/Program Files/IdeaProjects/Stack Record/build/resources/main">
 		</dir>
-		<dir name="D:/Program Files/IdeaProjects/StackRecorder/build/classes/java/main">
+		<dir name="D:/Program Files/IdeaProjects/Stack Record/build/classes/java/main">
 		</dir>
 	</classpath>
 

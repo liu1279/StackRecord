@@ -1,11 +1,11 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-    <id>com.StackRecorder</id>
+    <id>com.StackRecord</id>
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>StackRecorder</name>
+    <name>Stack Record</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="460302767@qq.com" url="https://www.ljpcompany.com">ljpcompany</vendor>
@@ -15,8 +15,23 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>
         <![CDATA[
+            <h1> English</h1>
             a plugin for stack record and analysis.<br>
-            <em>help you learn method call</em>
+            <em>1.format print stack<br></em>
+            <em>2.combining multiple stacks<br></em>
+            <em>3.briefly analyze the stack<br></em>
+            <br>
+            use it by this way:<br>
+            https://blog.csdn.net/weixin_45864553/article/details/132516241<br><br>
+
+            <h1> 中文</h1>
+            一个用来记录和分析栈的插件<br>
+            <em>1.格式化打印栈<br></em>
+            <em>2.有机结合多个栈<br></em>
+            <em>3.简要地分析栈<br></em>
+            <br>
+            可通过以下cdsn地址查看使用方式:<br>
+            https://blog.csdn.net/weixin_45864553/article/details/132516241<br>
         ]]>
     </description>
 
@@ -27,7 +42,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="stack.RecordWindowFactory" id="recordWindow" anchor="right"></toolWindow>
+        <toolWindow factoryClass="stack.RecordWindowFactory" id="Stack Record" anchor="right"></toolWindow>
     </extensions>
 
     <projectListeners>
