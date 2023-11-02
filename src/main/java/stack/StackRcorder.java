@@ -38,7 +38,9 @@ public class StackRcorder extends AnAction {
         }
         List<LineData> lineDataList = new ArrayList<>();
         for (JavaStackFrame item : items) {
-            lineDataList.add(0, new LineData(item));
+            if (item.getSourcePosition() != null && item.getDescriptor().getMethod() != null) {
+                lineDataList.add(0, new LineData(item));
+            }
         }
         if (!ALL_START_METHODS.contains(lineDataList.get(0))) {
             ALL_START_METHODS.add(lineDataList.get(0));
