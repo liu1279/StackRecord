@@ -1,9 +1,11 @@
 package stack;
 
 import com.intellij.debugger.engine.JavaStackFrame;
+import com.intellij.debugger.memory.utils.StackFrameItem;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DataKey;
+import com.intellij.xdebugger.frame.XStackFrame;
 import com.intellij.xdebugger.impl.frame.XDebuggerFramesList;
 import org.apache.commons.lang3.StringUtils;
 
@@ -32,14 +34,18 @@ public class StackRcorder extends AnAction {
     }
 
     public static void storeLineData(XDebuggerFramesList framesList) {
-        List<JavaStackFrame> items = (List<JavaStackFrame>) framesList.getModel().getItems();
+        List<XStackFrame> items = (List<XStackFrame>) framesList.getModel().getItems();
         if (items.isEmpty()) {
             return;
         }
         List<LineData> lineDataList = new ArrayList<>();
-        for (JavaStackFrame item : items) {
-            if (item.getSourcePosition() != null && item.getDescriptor().getMethod() != null) {
-                lineDataList.add(0, new LineData(item));
+        for (XStackFrame item : items) {
+            if (item instanceof JavaStackFrame javaStackFrame) {
+                if (javaStackFrame.getSourcePosition() != null && javaStackFrame.getDescriptor().getMethod() != null) {
+                    lineDataList.add(0, new LineData(javaStackFrame));
+                }
+            } else if (item instanceof StackFrameItem.CapturedStackFrame) {
+                // todo
             }
         }
         if (!ALL_START_METHODS.contains(lineDataList.get(0))) {
