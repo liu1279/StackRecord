@@ -34,6 +34,19 @@
             https://blog.csdn.net/weixin_45864553/article/details/132516241<br>
         ]]>
     </description>
+    <change-notes>
+        <![CDATA[
+        <h1> English</h1>
+         1.2 fix error which happens on asynchronous Call<br>
+         1.1 fix bug which is caused by losing information of stack<br>
+         1.0 first publish<br>
+
+         <h1> 中文</h1>
+         1.2 修复异步调用时导致的错误<br>
+         1.1 修复栈缺少信息导致的错误<br>
+         1.0 首次发布<br>
+        ]]>
+    </change-notes>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
